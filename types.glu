@@ -1,0 +1,6 @@
+type StdOrdering = | Less | Equal | Greater
+type Ordering = (StdOrdering,)
+
+{
+    Ordering,
+}
