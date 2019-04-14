@@ -1,5 +1,24 @@
-let { Ordering } = import! util.types
+let { semigroup } = import! std.string
+let { (<>) } = import! std.semigroup
+
+let { ? } = import! util.one_tuple
+let ordering @ { ? } = import! util.std.cmp.ordering
+
+#[derive(Eq)]
+type Ordering = {_0: ordering.StdOrdering}
+
+let ord : Ord Ordering = {
+    eq = eq_Ordering,
+    compare = \l r -> ordering.ord.compare l._0 r._0
+}
+
+let show : Show Ordering = {
+    show = \o -> "Ordering " <> show o
+}
 
 {
     Ordering,
+    eq = eq_Ordering,
+    ord,
+    show,
 }

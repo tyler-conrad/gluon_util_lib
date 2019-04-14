@@ -6,7 +6,7 @@ let eq ?d ?e : [Eq a] -> [Eq b] -> Eq (a, b) = {
 }
 
 let show ?d ?e : [Show a] -> [Show b] -> Show (a, b) = {
-    show = \t -> "(" <> d.show t._0 <> ", " <> e.show t._1 <> ")"
+    show = \tt -> "(" <> d.show tt._0 <> ", " <> e.show tt._1 <> ")"
 }
 
 {

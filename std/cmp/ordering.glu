@@ -1,0 +1,26 @@
+let { Ordering } = import! std.cmp
+
+#[derive(Eq, Show)]
+type StdOrdering = | Less | Equal | Greater
+
+let ord : Ord StdOrdering = {
+    eq = eq_StdOrdering,
+    compare = \l r ->
+    if l == r
+    then EQ
+    else match (l, r) with
+            | (Less, Equal) -> LT
+            | (Less, Greater) -> LT
+            | (Equal, Less) -> GT
+            | (Equal, Greater) -> LT
+            | (Greater, Less) -> GT
+            | (Greater, Equal) -> GT
+            | _ -> error("Unreachable branch of util.std.cmp.ordering.StdOrdering.ord.compare.")
+}
+
+{
+    StdOrdering,
+    eq = eq_StdOrdering,
+    ord,
+    show = show_StdOrdering,
+}

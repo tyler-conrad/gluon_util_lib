@@ -1,0 +1,15 @@
+let { semigroup } = import! std.string
+let { (<>) } = import! std.semigroup
+
+let eq ?d : [Eq a] -> Eq {_0: a} = {
+    (==) = \l r -> (d.(==) l._0 r._0)
+}
+
+let show ?d : [Show a] -> Show {_0: a} = {
+    show = \ot -> "(" <> d.show ot._0 <> ",)"
+}
+
+{
+    eq,
+    show,
+}
