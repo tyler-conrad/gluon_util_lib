@@ -1,0 +1,7 @@
+#[derive(Show, Eq)]
+type TwoTuple a b = (a, b)
+
+{
+    eq = eq_TwoTuple,
+    show = show_TwoTuple,
+}

@@ -1,0 +1,7 @@
+#[derive(Show, Eq)]
+type OneTuple a = {_0: a}
+
+{
+    eq = eq_OneTuple,
+    show = show_OneTuple,
+}
