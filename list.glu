@@ -1,0 +1,8 @@
+let { List } = import! std.list
+
+#[infix(right, 9)]
+let (::) value list : a -> List a -> List a = Cons value list
+
+{
+    (::)
+}

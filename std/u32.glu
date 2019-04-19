@@ -1,4 +1,1 @@
-{
-    ..
-    import! util.std.u32.prim
-}
+import! util.std.u32.prim

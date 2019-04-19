@@ -1,0 +1,102 @@
+let { (<|) } = import! std.function
+let { semigroup } = import! std.string
+let { (<>) } = import! std.semigroup
+let { List, foldable } = import! std.list
+let { foldr } = import! std.foldable
+let { find, split_at } = import! std.string
+
+let { (::) } = import! util.list
+let prim = import! util.log.prim
+
+let interpolate str value_str_list =
+    let len list = (foldr (\_ r -> r + 1) 0 list)
+
+    let split str =
+        match find str "{}" with
+        | None -> str :: Nil
+        | Some(index) ->
+            let (left, right) = split_at str index
+            let (_,  right) = split_at str (index + 2)
+            left :: split right
+
+    let intersperse str_list value_str_list =
+        match (str_list, value_str_list) with
+        | (Nil, Nil) -> Nil
+        | (Nil, Cons x xs ) -> x :: intersperse Nil xs
+        | (Cons x Nil, _) -> x :: Nil
+        | (Cons x xs, Nil) -> x :: "{}" :: intersperse xs Nil
+        | (Cons x xs, Cons y ys) -> x :: y :: intersperse xs ys
+
+    let split_str = split str
+    let len_split = (len split_str) - 1
+    let len_value_str_list = len value_str_list
+
+    let _ = if len_split /= len_value_str_list
+        then prim.warn (
+            "The number of placeholders in the log string: "
+            <> show len_split <>
+            ", does not match the number of values supplied: "
+            <> show len_value_str_list <>
+            "."
+        )
+        else ()
+
+    foldr (<>) "" <| intersperse split_str value_str_list
+
+let log1 log_func str a : (String -> ()) -> [Show a] -> String -> a -> () =
+    log_func <| interpolate str <| (show a)::Nil
+
+let log2 log_func str a b : (String -> ()) -> [Show a] -> [Show b] -> String ->  a -> b -> () =
+    log_func <| interpolate str <| (show a)::(show b)::Nil
+
+let log3 log_func str a b c : (String -> ()) -> [Show a] -> [Show b] -> [Show c] -> String -> a -> b -> c -> () =
+    log_func <| interpolate str <| (show a)::(show b)::(show c)::Nil
+
+let trace = prim.trace
+let trace1 = log1 trace
+let trace2 = log2 trace
+let trace3 = log3 trace
+
+let debug = prim.debug
+let debug1 = log1 debug
+let debug2 = log2 debug
+let debug3 = log3 debug
+
+let info = prim.info
+let info1 = log1 info
+let info2 = log2 info
+let info3 = log3 info
+
+let warn = prim.warn
+let warn1 = log1 warn
+let warn2 = log2 warn
+let warn3 = log3 warn
+
+let error = prim.error
+let error1 = log1 error
+let error2 = log2 error
+let error3 = log3 error
+
+{
+    interpolate,
+    trace,
+    trace1,
+    trace2,
+    trace3,
+    debug,
+    debug1,
+    debug2,
+    debug3,
+    info,
+    info1,
+    info2,
+    info3,
+    warn,
+    warn1,
+    warn2,
+    warn3,
+    error,
+    error1,
+    error2,
+    error3,
+}
