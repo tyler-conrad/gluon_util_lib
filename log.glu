@@ -8,15 +8,15 @@ let { find, split_at } = import! std.string
 let { (::) } = import! util.list
 let prim = import! util.log.prim
 
-let interpolate str value_str_list =
+let interpolate msg value_str_list =
     let len list = (foldr (\_ r -> r + 1) 0 list)
 
-    let split str =
-        match find str "{}" with
-        | None -> str :: Nil
+    let split msg =
+        match find msg "{}" with
+        | None -> msg :: Nil
         | Some(index) ->
-            let (left, right) = split_at str index
-            let (_,  right) = split_at str (index + 2)
+            let (left, right) = split_at msg index
+            let (_,  right) = split_at msg (index + 2)
             left :: split right
 
     let intersperse str_list value_str_list =
@@ -27,13 +27,13 @@ let interpolate str value_str_list =
         | (Cons x xs, Nil) -> x :: "{}" :: intersperse xs Nil
         | (Cons x xs, Cons y ys) -> x :: y :: intersperse xs ys
 
-    let split_str = split str
-    let len_split = (len split_str) - 1
+    let split_msg = split msg
+    let len_split = (len split_msg) - 1
     let len_value_str_list = len value_str_list
 
     let _ = if len_split /= len_value_str_list
         then prim.warn (
-            "The number of placeholders in the log string: "
+            "The number of placeholders in the log message: "
             <> show len_split <>
             ", does not match the number of values supplied: "
             <> show len_value_str_list <>
@@ -41,16 +41,16 @@ let interpolate str value_str_list =
         )
         else ()
 
-    foldr (<>) "" <| intersperse split_str value_str_list
+    foldr (<>) "" <| intersperse split_msg value_str_list
 
-let log1 log_func str a : (String -> ()) -> [Show a] -> String -> a -> () =
-    log_func <| interpolate str <| (show a)::Nil
+let log1 log_func msg a : (String -> ()) -> [Show a] -> String -> a -> () =
+    log_func <| interpolate msg <| (show a)::Nil
 
-let log2 log_func str a b : (String -> ()) -> [Show a] -> [Show b] -> String ->  a -> b -> () =
-    log_func <| interpolate str <| (show a)::(show b)::Nil
+let log2 log_func msg a b : (String -> ()) -> [Show a] -> [Show b] -> String ->  a -> b -> () =
+    log_func <| interpolate msg <| (show a)::(show b)::Nil
 
-let log3 log_func str a b c : (String -> ()) -> [Show a] -> [Show b] -> [Show c] -> String -> a -> b -> c -> () =
-    log_func <| interpolate str <| (show a)::(show b)::(show c)::Nil
+let log3 log_func msg a b c : (String -> ()) -> [Show a] -> [Show b] -> [Show c] -> String -> a -> b -> c -> () =
+    log_func <| interpolate msg <| (show a)::(show b)::(show c)::Nil
 
 let trace = prim.trace
 let trace1 = log1 trace
