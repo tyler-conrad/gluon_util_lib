@@ -85,46 +85,46 @@ let log_pred log_func pred msg =
     then log_func msg
     else ()
 
-let log_pred1 log_func pred msg a : [Show a] -> (String -> a -> ()) -> Bool -> String -> a -> () =
+let log1_pred log_func pred msg a : [Show a] -> (String -> a -> ()) -> Bool -> String -> a -> () =
     if pred
     then log_func msg a
     else ()
 
-let log_pred2 log_func pred msg a b : [Show a] -> [Show b]-> (String -> a -> b -> ()) -> Bool -> String -> a -> b -> () =
+let log2_pred log_func pred msg a b : [Show a] -> [Show b]-> (String -> a -> b -> ()) -> Bool -> String -> a -> b -> () =
     if pred
     then log_func msg a b
     else ()
 
-let log_pred3 log_func pred msg a b c : [Show a] -> [Show b]-> [Show c] -> (String -> a -> b -> c -> ()) -> Bool -> String -> a -> b -> c -> () =
+let log3_pred log_func pred msg a b c : [Show a] -> [Show b]-> [Show c] -> (String -> a -> b -> c -> ()) -> Bool -> String -> a -> b -> c -> () =
     if pred
     then log_func msg a b c
     else ()
 
 
 let trace_pred = log_pred trace
-let trace_pred1 : [Show a] -> Bool -> String -> a -> () = log_pred1 trace1
-let trace_pred2 : [Show a] -> [Show b] -> Bool -> String -> a -> b -> () = log_pred2 trace2
-let trace_pred3 : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b -> c -> () = log_pred3 trace3
+let trace1_pred : [Show a] -> Bool -> String -> a -> () = log1_pred trace1
+let trace2_pred : [Show a] -> [Show b] -> Bool -> String -> a -> b -> () = log2_pred trace2
+let trace3_pred : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b -> c -> () = log3_pred trace3
 
 let debug_pred = log_pred debug
-let debug_pred1 : [Show a] -> Bool -> String -> a -> () = log_pred1 debug1
-let debug_pred2 : [Show a] -> [Show b] -> Bool -> String -> a -> b -> () = log_pred2 debug2
-let debug_pred3 : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b -> c -> () = log_pred3 debug3
+let debug1_pred : [Show a] -> Bool -> String -> a -> () = log1_pred debug1
+let debug2_pred : [Show a] -> [Show b] -> Bool -> String -> a -> b -> () = log2_pred debug2
+let debug3_pred : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b -> c -> () = log3_pred debug3
 
 let info_pred = log_pred info
-let info_pred1 : [Show a] -> Bool -> String -> a -> () = log_pred1 info1
-let info_pred2 : [Show a] -> [Show b] -> Bool -> String -> a -> b -> () = log_pred2 info2
-let info_pred3 : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b -> c -> () = log_pred3 info3
+let info1_pred : [Show a] -> Bool -> String -> a -> () = log1_pred info1
+let info2_pred : [Show a] -> [Show b] -> Bool -> String -> a -> b -> () = log2_pred info2
+let info3_pred : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b -> c -> () = log3_pred info3
 
 let warn_pred = log_pred warn
-let warn_pred1 : [Show a] -> Bool -> String -> a -> () = log_pred1 warn1
-let warn_pred2 : [Show a] -> [Show b] -> Bool -> String -> a -> b -> () = log_pred2 warn2
-let warn_pred3 : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b -> c -> () = log_pred3 warn3
+let warn1_pred : [Show a] -> Bool -> String -> a -> () = log1_pred warn1
+let warn2_pred : [Show a] -> [Show b] -> Bool -> String -> a -> b -> () = log2_pred warn2
+let warn3_pred : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b -> c -> () = log3_pred warn3
 
 let error_pred = log_pred error
-let error_pred1 : [Show a] -> Bool -> String -> a -> () = log_pred1 error1
-let error_pred2 : [Show a] -> [Show b] -> Bool -> String -> a -> b -> () = log_pred2 error2
-let error_pred3 : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b -> c -> () = log_pred3 error3
+let error1_pred : [Show a] -> Bool -> String -> a -> () = log1_pred error1
+let error2_pred : [Show a] -> [Show b] -> Bool -> String -> a -> b -> () = log2_pred error2
+let error3_pred : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b -> c -> () = log3_pred error3
 
 
 {
@@ -156,27 +156,27 @@ let error_pred3 : [Show a] -> [Show b]-> [Show c] -> Bool -> String -> a -> b ->
     error3,
 
     trace_pred,
-    trace_pred1,
-    trace_pred2,
-    trace_pred3,
+    trace1_pred,
+    trace2_pred,
+    trace3_pred,
 
     debug_pred,
-    debug_pred1,
-    debug_pred2,
-    debug_pred3,
+    debug1_pred,
+    debug2_pred,
+    debug3_pred,
 
     info_pred,
-    info_pred1,
-    info_pred2,
-    info_pred3,
+    info1_pred,
+    info2_pred,
+    info3_pred,
 
     warn_pred,
-    warn_pred1,
-    warn_pred2,
-    warn_pred3,
+    warn1_pred,
+    warn2_pred,
+    warn3_pred,
 
     error_pred,
-    error_pred1,
-    error_pred2,
-    error_pred3,
+    error1_pred,
+    error2_pred,
+    error3_pred,
 }
